@@ -12,9 +12,11 @@ import FeaturedRow from '../components/Featured';
 import sanityClient from '../sanity';
 import 'react-native-url-polyfill/auto';
 
+
+
 const Home = () => {
 
-    const [featuredCategories,setFeaturedCategories] = useState([]);
+  
 
     const navigation=useNavigation();
     useLayoutEffect(()=>{
@@ -22,32 +24,30 @@ const Home = () => {
             headerShown:false
         })
     },[]);
-
+    const [featuredCategories,setFeaturedCategories] = useState([]);
     useEffect(()=>{  
-         fetchData = async ()=>{
-            const data=await sanityClient.fetch(
-                `*[_type=="featured"]{
-                    ...,
-                    restaurants[]->{
-                      ...,
-                      dishes[]->,
-                      type->{
-                        name
-      
-                      }    
-                    }
-                  }`
-            );
-            setFeaturedCategories(data);
-         } 
-         fetchData()
-    //   
+       const fetchData = async ()=>{
+           const data=await sanityClient.fetch(
+               `*[_type=="featured"]{
+                   ...,
+                   restaurants[]->{
+                     ...,
+                     dishes[]->,
+                     type->{
+                       name
      
+                     }    
+                   }
+                 }`
+           );
+           setFeaturedCategories(data);
+        } 
+        fetchData()
+   },[]);
+//    console.log(featuredCategories   [0].restaurants) 
 
-      
-    },[])
 
-    
+
  return (
     <SafeAreaView className='pt-5'>
         <ScrollView>
@@ -83,22 +83,15 @@ const Home = () => {
             <Categories/>
             
         </ScrollView>
-       
-         <FeaturedRow
-            id='1'
-            title='Offers Near You!!'
-            description="Why not support out local restaurants tonight"
-        />
-         <FeaturedRow
-            id='2'
-            title='Featured'
-            description="Paid placements from our partners"
-        />
-         <FeaturedRow
-            id='3'
-            title='Tasty Discounts'
-            description="Why not support out local restaurants tonight"
-        /> 
+                    {/* :TODO A modal can be added for showing loading until featured categories loads */}
+           {featuredCategories?.map(category=>{
+                  return  <FeaturedRow
+                        id={category._id}
+                        key={category._id}
+                        title={category.name}
+                        description={category.short_description}
+                    />
+                })}
     </ScrollView>
 
      </SafeAreaView>
