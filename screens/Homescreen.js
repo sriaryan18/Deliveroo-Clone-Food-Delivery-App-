@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView,Image, Settings, TextInput, ScrollView } from 'react-native'
+import { View, Text, SafeAreaView,Image, Settings, TextInput, ScrollView, Touchable, TouchableOpacity } from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
@@ -15,9 +15,6 @@ import 'react-native-url-polyfill/auto';
 
 
 const Home = () => {
-
-  
-
     const navigation=useNavigation();
     useLayoutEffect(()=>{
         navigation.setOptions({
@@ -44,9 +41,6 @@ const Home = () => {
         } 
         fetchData()
    },[]);
-//    console.log(featuredCategories   [0].restaurants) 
-
-
 
  return (
     <SafeAreaView className='pt-5'>
@@ -56,14 +50,18 @@ const Home = () => {
                 source={{
                     uri:'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg'
                 }}
-                className='h-7 w-7 rounded-full bg-gray-300 p-4'
+                className='h-10 w-10 rounded-full bg-gray-300 p-4'
             />
             <View className='flex-1'>
                 <Text className='font-bold text-gray-400 text-xs'> Deliver Now!!!</Text>
-                <Text className='font-bold text-xl'>
-                    Current Location
-                    <ChevronDownIcon size={20} color="#00CCBB"/>
-                </Text>
+                <View className="items-center flex-row space-x-2">
+                    <Text className='font-bold text-xl'>
+                        Current Location
+                    </Text>
+                    <TouchableOpacity>
+                        <ChevronDownIcon size={20} color="#00CCBB"/>
+                    </TouchableOpacity>
+                </View>
             </View>
             <UserIcon size={35} color="#00CCBB"/>
         </View>
@@ -90,6 +88,7 @@ const Home = () => {
                         key={category._id}
                         title={category.name}
                         description={category.short_description}
+                        restaurantsArray={category.restaurants} 
                     />
                 })}
     </ScrollView>
