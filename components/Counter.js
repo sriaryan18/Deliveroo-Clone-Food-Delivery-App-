@@ -1,18 +1,28 @@
-import { View, Text, Touchable, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import { MinusCircleIcon, PlusCircleIcon } from 'react-native-heroicons/solid'
+import { useDispatch, useSelector } from 'react-redux';
+import { addItems, removeItems, selectBasketItems, selectBasketItemsWithId } from '../redux/storeBasket';
 
-const Counter = () => {
+const Counter = ({id,description,name,image,price}) => {
     const [count,setCount]=useState(0);
+    const items=useSelector((state)=> {return selectBasketItemsWithId(state,id)});
+    const dispatch = useDispatch();
+    const addItemsInBasket = ()=>{
+     dispatch(addItems({id,description,name,image,price}))
+    };
+    const removeItemFromBasket = ()=>{
+      dispatch(removeItems({id}));
+    }
   return (
-    <View className="flex-row space-x-3">
-    <TouchableOpacity>
-         <MinusCircleIcon onPress={()=>{ if(count>0) setCount(count-1)}} size={30} color="#00CCBB"/>
+    <View className="flex-row space-x-3 items-center bg-gray-50 rounded-xl " >
+    <TouchableOpacity onPress={removeItemFromBasket} disabled={!items.length}>
+         <MinusCircleIcon size={40} color={items.length?"#00CCBB":"gray"}/>
      </TouchableOpacity>
     
-     <Text className="text-black text-lg">{count}</Text>
-     <TouchableOpacity onPress={()=>{setCount(count+1)}}>
-         <PlusCircleIcon size={30} color="#00CCBB"/>
+     <Text className="text-black text-2xl">{items.length}</Text>
+     <TouchableOpacity onPress={addItemsInBasket}>
+         <PlusCircleIcon size={40} color="#00CCBB"/>
      </TouchableOpacity>
     </View>
   )

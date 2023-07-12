@@ -5,6 +5,7 @@ import { ArrowLeftCircleIcon, StarIcon } from 'react-native-heroicons/solid';
 import { ArrowLeftIcon, ChevronRightIcon, MapPinIcon, QuestionMarkCircleIcon } from 'react-native-heroicons/outline';
 import { urlFor } from '../sanity';
 import DishRow from '../components/DishRow';
+import BasketIcon from '../components/BasketIcon';
 
 const Restaurants = () => {
     const {params:{
@@ -25,7 +26,8 @@ const Restaurants = () => {
         })
     });
   return (
-
+    <>
+    <BasketIcon/>
     <ScrollView>
         <View className='relative'>
             <Image
@@ -75,7 +77,7 @@ const Restaurants = () => {
          <View>
             <Text className="px-4 pt-6 mb-3 font-bold text-xl text-black"> Menu   </Text>
          </View>
-         <View className="bg-white">
+         <View className="bg-white pb-40">
             {dishes.map(dish=>(
                 <DishRow
                 key={dish._id}
@@ -91,6 +93,7 @@ const Restaurants = () => {
 
        
     </ScrollView>
+    </>
   )
 }
 
