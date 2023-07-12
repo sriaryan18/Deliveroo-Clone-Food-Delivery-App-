@@ -1,6 +1,7 @@
 import { View, Text, Touchable, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { CurrencyRupeeIcon } from 'react-native-heroicons/outline'
+import Counter from './Counter';
 
 const DishRow = ({
     id,
@@ -9,28 +10,35 @@ const DishRow = ({
     imgUrl,
     price
 }) => {
+   const [showCounter,setShowCounter]=useState(false);
   return (
-    <TouchableOpacity>
-        <View className="px-4 bg-white border border-gray-200 flex-row items-center pb-6">
-            <View className='flex-1 pr-2'>
+    <View className="bg-white border border-gray-200 ">
+        <TouchableOpacity  onPress={()=>setShowCounter(!showCounter)} className="px-2 py-4 flex-row ">
+                <View className="w-3/4 ">
                 <Text className="mb-1 text-lg text-black">{name}</Text>
-                <Text className="text-gray-400">
-                    {short_description}
-                </Text>
-                <View className="items-center flex-row space-x-1 mt-2">
-                    <CurrencyRupeeIcon size={20} color="gray"/>
-                    <Text>{price}</Text>
+                    <Text className="text-gray-400 h-10 w-70">
+                        {short_description}
+                    </Text>
+                    <View className="items-center flex-row space-x-1 mt-2">
+                        <CurrencyRupeeIcon size={20} color="gray"/>
+                        <Text>{price}</Text>
+                    </View>
                 </View>
-            </View>
-        <View>
-            <Image
-                src={imgUrl}
-                className="h-20 w-20 rounded-md mt-6"
-            />
-        </View>
-           
-        </View>
-    </TouchableOpacity>
+                <View className="flex-row items-center ml-2">
+                <Image
+                    src={imgUrl}
+                    className="h-20 w-20 rounded-md mt-1"
+                />
+                </View>
+        </TouchableOpacity>
+       
+        {showCounter?
+            <View className="items-center">
+                <Counter/>
+            </View>:null
+        }
+
+    </View>
   )
 }
 
