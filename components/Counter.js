@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItems, removeItems, selectBasketItems, selectBasketItemsWithId } from '../redux/storeBasket';
 
 const Counter = ({id,description,name,image,price}) => {
-    const [count,setCount]=useState(0);
     const items=useSelector((state)=> {return selectBasketItemsWithId(state,id)});
     const dispatch = useDispatch();
     const addItemsInBasket = ()=>{
@@ -13,7 +12,7 @@ const Counter = ({id,description,name,image,price}) => {
     };
     const removeItemFromBasket = ()=>{
       dispatch(removeItems({id}));
-    }
+      }
   return (
     <View className="flex-row space-x-3 items-center bg-gray-50 rounded-xl " >
     <TouchableOpacity onPress={removeItemFromBasket} disabled={!items.length}>

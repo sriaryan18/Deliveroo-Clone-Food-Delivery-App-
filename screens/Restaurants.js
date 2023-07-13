@@ -1,11 +1,13 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from 'react-native'
-import React, { useLayoutEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { ArrowLeftCircleIcon, StarIcon } from 'react-native-heroicons/solid';
 import { ArrowLeftIcon, ChevronRightIcon, MapPinIcon, QuestionMarkCircleIcon } from 'react-native-heroicons/outline';
 import { urlFor } from '../sanity';
 import DishRow from '../components/DishRow';
 import BasketIcon from '../components/BasketIcon';
+import { useSelector } from 'react-redux';
+import { getTotalSum } from '../redux/storeBasket';
 
 const Restaurants = () => {
     const {params:{
@@ -20,14 +22,16 @@ const Restaurants = () => {
         long,lat
     }}=useRoute();
     const navigation=useNavigation();
-    useLayoutEffect(()=>{
+    const total =useSelector(getTotalSum);
+      useLayoutEffect(()=>{
         navigation.setOptions({
             headerShown:false
         })
     });
+
   return (
     <>
-    <BasketIcon/>
+    {total?<BasketIcon/>:null} 
     <ScrollView>
         <View className='relative'>
             <Image
@@ -78,8 +82,8 @@ const Restaurants = () => {
             <Text className="px-4 pt-6 mb-3 font-bold text-xl text-black"> Menu   </Text>
          </View>
          <View className="bg-white pb-40">
-            {dishes.map(dish=>(
-                <DishRow
+            {dishes.map(dish=>{
+                return <DishRow
                 key={dish._id}
                 id={dish._id}
                 short_description={dish.short_description}
@@ -88,7 +92,7 @@ const Restaurants = () => {
                 name={dish.name}
 
                   />
-            ))}
+            })}
          </View>
 
        

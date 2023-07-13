@@ -36,9 +36,10 @@ const DishRow = ({
             <View className="items-center">
                 <Counter
                    id= {id} 
-                   descriptio={short_description}
+                   description={short_description}
                    name={name}
-                   imgUrl={imgUrl}
+                   image={imgUrl}
+                   key={id}
                    price={price}
                 />
             </View>:null
