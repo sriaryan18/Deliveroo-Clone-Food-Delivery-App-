@@ -9,6 +9,7 @@ import storeBasket from './store';
 import Basket from './screens/Basket';
 import PreparingScreen from './screens/PreparingScreen';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
