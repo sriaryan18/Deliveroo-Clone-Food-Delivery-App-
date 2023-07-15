@@ -1,18 +1,18 @@
 import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
 import React, { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { selectBasketItems } from '../redux/storeBasket'
-import { XCircleIcon } from 'react-native-heroicons/solid'
+import { getTotalSum, selectBasketItems } from '../redux/storeBasket'
+import { ShoppingBagIcon, XCircleIcon } from 'react-native-heroicons/solid'
 import DishInBasket from '../components/DishInBasket'
 import { urlFor } from '../sanity'
 import { useNavigation } from '@react-navigation/native'
-import { CheckIcon, TicketIcon } from 'react-native-heroicons/outline'
 import BasketButtons from '../components/BasketButtons'
 
 const Basket = () => {
     const navigation = useNavigation();
     const dishes = useSelector(selectBasketItems);
     const [dishIds,setDishIds]=useState({});
+    const total =useSelector(getTotalSum);
     useMemo(()=>{
         let aggregatedObj={};
         for(let dish of dishes){
@@ -28,6 +28,7 @@ const Basket = () => {
     for(const [key,value] of Object.entries(dishIds)){
         let dish=dishIds[key][0];
         let amt=dish.price * dishIds[key].length;
+        
         arr.push(
             <DishInBasket
                 key={key}
@@ -42,8 +43,14 @@ const Basket = () => {
   return (
     <View className="relative">
         <ScrollView className="mt-4 mx-3">
-            <View className="bg-white rounded-md border-2 border-gray-300 px-4 pt-5 pb-5 shadow-2xl my-2">
-                <View onPress={()=> navigation.goBack()} className="flex-row justify-between">
+            <View className="bg-white rounded-md border-2 border-gray-300 px-4 justify-center space-x-2 pt-5 pb-5 shadow-2xl my-2 items-center flex-row">
+
+                    <Text className="text-4xl font-extrabold  text-[#00CCBB]">
+                        Your Cart
+                    </Text>
+                    <ShoppingBagIcon size={50} color="green"/>
+
+                {/* <View onPress={()=> navigation.goBack()} className="flex-row justify-between">
                     <TouchableOpacity >
                         <CheckIcon size={50} color="#00CCBB"/>
                     </TouchableOpacity>
@@ -51,14 +58,19 @@ const Basket = () => {
                         <XCircleIcon size={50} color="#00CCBB"/>
                     </TouchableOpacity>
                 
-                </View>
+                </View> */}
             </View>
             <View className="pb-40">{arr}</View>
             
         </ScrollView>
-        <View className="absolute z-50 bottom-10 w-full">
-            <BasketButtons/>
-            <BasketButtons/>
+        <View className="absolute bottom-10 flex-row  items-center bg-gray-100 px-8 w-full justify-between">
+            <BasketButtons
+                type="Order-Button"
+                total={total}
+            />
+            <BasketButtons
+                type="Cancel"
+            />
         </View>
     </View>
   )
