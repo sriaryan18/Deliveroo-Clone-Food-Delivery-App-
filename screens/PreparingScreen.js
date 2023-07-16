@@ -1,9 +1,18 @@
 import { View, Text } from 'react-native'
 import {ProgressBar} from '@react-native-community/progress-bar-android'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Animatable from 'react-native-animatable';
+import { useNavigation } from '@react-navigation/native';
 
 const PreparingScreen = () => {
+
+  const navigation =  useNavigation();
+  useEffect(()=>{
+    setTimeout(()=>{
+        navigation.navigate("Delivery Screen");
+    },4000)
+  },[]);
+
   return (
     <View className="  bg-[#00bcde] flex-1 justify-center items-center">
         <Animatable.Image
