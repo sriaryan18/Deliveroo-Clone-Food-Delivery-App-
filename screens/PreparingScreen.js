@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,Image } from 'react-native'
 import {ProgressBar} from '@react-native-community/progress-bar-android'
 import React, { useEffect } from 'react'
 import * as Animatable from 'react-native-animatable';
@@ -31,6 +31,7 @@ const PreparingScreen = () => {
         </Animatable.Text>
         {/* <Progress.CircleSnail color='white' fill='transparent' borderColor='white'  unfilledColor='white'/> */}
         <ProgressBar color="white" />
+      
     </View>
   )
 }

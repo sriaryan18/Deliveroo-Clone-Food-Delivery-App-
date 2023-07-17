@@ -10,7 +10,7 @@ const BasketButtons = ({
 }) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity className={`${type=="Order-Button"?'bg-[#00CCBB]':"bg-red-600"} border rounded-lg shadow-4xl items-center
+    <TouchableOpacity className={`${type=="Order-Button"?'bg-[#00CCBB]':'bg-red-600'} border rounded-lg shadow-4xl items-center
       px-7`}
       onPress={type != "Order-Button"?()=>navigation.goBack():()=>navigation.navigate("Preparation Screen")}
       >
